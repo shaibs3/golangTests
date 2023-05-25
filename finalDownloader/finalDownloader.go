@@ -57,6 +57,6 @@ func (fd *FinalDownloader) Download(file *os.File, key, bucket string) (int64, e
 	if err != nil {
 		return -1, err
 	}
-	
+
 	return numBytes, err
 }

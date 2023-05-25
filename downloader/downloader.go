@@ -1,14 +1,11 @@
 package downloader
 
 import (
-	"github.com/avast/retry-go"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"io"
 	"log"
 	"os"
 	"sync"
+
 )
 
 type S3Downloader interface {
