@@ -26,8 +26,8 @@ func main() {
 	)
 
 	client := s3manager.NewDownloader(sess)
-	downloader := s3.NewDownloader(client, &sync.Mutex{}, "my_test_key", "my_test_bucket", 3)
-	numBytes, _ := downloader.Download(file)
+	downloader := s3.NewDownloader(client, &sync.Mutex{}, 3)
+	numBytes, _ := downloader.Download(file, "my_test_key", "my_test_bucket")
 
 	fmt.Println("Downloaded", file.Name(), numBytes, "bytes")
 	file.Close()
