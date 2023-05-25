@@ -15,21 +15,27 @@ type Downloader struct {
 	client     *s3manager.Downloader
 	lock       *sync.Mutex
 	numRetries uint
+	key        string
+	bucket     string
 }
 
-func NewDownloader(client *s3manager.Downloader, lock *sync.Mutex, numRetries uint) *Downloader {
+func NewDownloader(client *s3manager.Downloader, lock *sync.Mutex,
+	key, bucket string, numRetries uint,
+) *Downloader {
 	return &Downloader{
 		client:     client,
 		lock:       lock,
 		numRetries: numRetries,
+		key:        key,
+		bucket:     bucket,
 	}
 }
 
-func (s3Client *Downloader) Download(file *os.File, key, bucket string) (int64, error) {
+func (s3Client *Downloader) Download(file *os.File) (int64, error) {
 	var numBytes int64
 	s3Obj := &s3.GetObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(key),
+		Bucket: aws.String(s3Client.bucket),
+		Key:    aws.String(s3Client.key),
 	}
 	s3Client.lock.Lock()
 

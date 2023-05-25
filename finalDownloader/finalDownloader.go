@@ -19,21 +19,25 @@ type FinalDownloader struct {
 	client     downloader.S3Downloader
 	lock       Locker
 	numRetries int
+	key        string
+	bucket     string
 }
 
-func NewFinalDownloader(client downloader.S3Downloader, lock Locker, retries int) *FinalDownloader {
+func NewFinalDownloader(client downloader.S3Downloader, lock Locker, key, bucket string, retries int) *FinalDownloader {
 	return &FinalDownloader{
 		client:     client,
 		lock:       lock,
 		numRetries: retries,
+		key:        key,
+		bucket:     bucket,
 	}
 }
 
-func (fd *FinalDownloader) Download(file *os.File, key, bucket string) (int64, error) {
+func (fd *FinalDownloader) Download(file *os.File) (int64, error) {
 	var numBytes int64
 	s3Obj := &s3.GetObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(key),
+		Bucket: aws.String(fd.bucket),
+		Key:    aws.String(fd.key),
 	}
 	fd.lock.Lock()
 
