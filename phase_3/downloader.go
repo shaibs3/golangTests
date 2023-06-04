@@ -1,4 +1,4 @@
-package finalDownloader
+package phase_3
 
 import (
 	"log"
@@ -7,7 +7,7 @@ import (
 	"github.com/avast/retry-go"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/shaibs3/golangTests/downloader"
+	"github.com/shaibs3/golangTests/phase_2"
 )
 
 type Locker interface {
@@ -16,12 +16,12 @@ type Locker interface {
 }
 
 type FinalDownloader struct {
-	client     downloader.S3Downloader
+	client     phase_2.S3Downloader
 	lock       Locker
 	numRetries int
 }
 
-func NewFinalDownloader(client downloader.S3Downloader, lock Locker, retries int) *FinalDownloader {
+func NewFinalDownloader(client phase_2.S3Downloader, lock Locker, retries int) *FinalDownloader {
 	return &FinalDownloader{
 		client:     client,
 		lock:       lock,
@@ -52,11 +52,10 @@ func (fd *FinalDownloader) Download(file *os.File, key, bucket string) (int64, e
 			log.Printf("Retrying request after error: %v", err)
 		}),
 	)
-
-	fd.lock.Unlock()
 	if err != nil {
 		return -1, err
 	}
 
+	fd.lock.Unlock()
 	return numBytes, err
 }

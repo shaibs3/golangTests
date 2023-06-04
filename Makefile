@@ -19,6 +19,12 @@ tidy:
 test:
 	$(GO) test -v -race ./... -coverprofile ${TEST_COVERAGE_FILE}
 
+test_phase_2:
+	$(GO) test -v -race ./phase_2 -coverprofile ${TEST_COVERAGE_FILE}
+
+test_phase_3:
+	$(GO) test -v -race ./phase_3 -coverprofile ${TEST_COVERAGE_FILE}
+
 lint: $(GOLANGCI_LINT)
 	$(GOLANGCI_LINT) run --fix --fast --enable-all --disable nosnakecase --disable ifshort --disable gomnd --disable wsl --disable nlreturn --disable scopelint --timeout 120s
 

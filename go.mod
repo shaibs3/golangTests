@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/aws/aws-sdk-go v1.44.268
+	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.8.0
 )
 

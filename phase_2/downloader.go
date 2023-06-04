@@ -1,27 +1,27 @@
-package s3
+package phase_2
 
 import (
+	"io"
 	"log"
 	"os"
 	"sync"
 
-	"github.com/avast/retry-go"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
+type S3Downloader interface {
+	Download(w io.WriterAt, input *s3.GetObjectInput, options ...func(*s3manager.Downloader)) (n int64, err error)
+}
 type Downloader struct {
-	client     *s3manager.Downloader
+	client     S3Downloader
 	lock       *sync.Mutex
-	numRetries uint
+	numRetries int
 }
 
-func NewDownloader(client *s3manager.Downloader, lock *sync.Mutex, numRetries uint) *Downloader {
+func NewDownloader(client S3Downloader, lock *sync.Mutex, retries int) *Downloader {
 	return &Downloader{
 		client:     client,
 		lock:       lock,
-		numRetries: numRetries,
+		numRetries: retries,
 	}
 }
 
@@ -43,7 +43,7 @@ func (s3Client *Downloader) Download(file *os.File, key, bucket string) (int64, 
 
 			return err
 		},
-		retry.Attempts(s3Client.numRetries),
+		retry.Attempts(uint(s3Client.numRetries)),
 		retry.OnRetry(func(n uint, err error) {
 			log.Printf("Retrying request after error: %v", err)
 		}),
