@@ -35,6 +35,6 @@ test_with_coverage: test
 	$(GO) tool cover -html=${TEST_COVERAGE_FILE}
 
 mockery:
-	mockery --name=S3Downloader --with-expecter --dir ./downloader
-	mockery --name=Locker --with-expecter --dir ./finalDownloader
+	mockery --name=S3Downloader --with-expecter --dir ./phase_2
+	mockery --name=Locker --with-expecter --dir ./phase_3
 

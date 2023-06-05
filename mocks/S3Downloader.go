@@ -5,8 +5,9 @@ package mocks
 import (
 	io "io"
 
-	s3 "github.com/aws/aws-sdk-go/service/s3"
 	mock "github.com/stretchr/testify/mock"
+
+	s3 "github.com/aws/aws-sdk-go/service/s3"
 
 	s3manager "github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
