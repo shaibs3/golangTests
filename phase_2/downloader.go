@@ -6,6 +6,10 @@ import (
 	"os"
 	"sync"
 
+	"github.com/avast/retry-go"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
 type S3Downloader interface {
