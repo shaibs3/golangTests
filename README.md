@@ -6,6 +6,8 @@ the code is divided into 3 parts:
 2. phase 2 - the same program but with interfaces and unit tests.
 3. phase 3 - the same program as in phase 2 with more code refactoring and better tests coverage.
 
+For more reading refer to [Refactoring Go Code for Testability: Harnessing the Power of Interfaces](https://medium.com/@shaibs3/refactoring-go-code-for-testability-harnessing-the-power-of-interfaces-d315169f8b2e)
+
 
 ## Running the tests 
 ### phase 2
